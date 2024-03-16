@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/company_item"
+    android:layout_width="match_parent"
+    android:paddingVertical="16dp"
+    android:paddingHorizontal="20dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content">
+        <com.google.android.material.imageview.ShapeableImageView
+            app:shapeAppearanceOverlay="@style/circle"
+            android:id="@+id/companyLogoImg"
+            android:src="@drawable/googleg_standard_color_18"
+            android:layout_width="60dp"
+            android:padding="10dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="16dp"/>
+        <TextView
+            android:maxLines="1"
+            android:id="@+id/companyNameTxt"
+            android:text="Google"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:fontFamily="@font/outfit_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:fontFamily="@font/outfit_bold"
+        android:text="Mountain View, CA"
+        android:id="@+id/companyAddressTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/primary"
+    android:layout_marginHorizontal="10dp"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/message_dialog_title"
+        android:text="Message"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:fontFamily="@font/outfit_bold"
+        android:textSize="25sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/message_dialog_body"
+        android:text="This is a message dialog."
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:fontFamily="@font/outfit_light"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:background="@drawable/orange_button"
+        app:backgroundTint="@null"
+        android:layout_marginTop="10dp"
+        android:text="Confirm"
+        android:textSize="20sp"
+        android:fontFamily="@font/outfit_light"
+        android:textColor="@color/white"
+        android:id="@+id/main_dialog_button"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

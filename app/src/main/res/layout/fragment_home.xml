@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_dark"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HomeFragment"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/homeFragmentLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingVertical="16dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            >
+
+            <TextView
+                android:textSize="26sp"
+                android:text="Hello,"
+                android:fontFamily="@font/outfit_light"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/seekerNameTxt"
+                android:textColor="@color/primary_text"
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="30sp"
+                android:text="Welcome to Outfit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/outfit_bold"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:text="Check out some of the job categories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="10dp"
+                android:id="@+id/jobCategoryHorizontalRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:fontFamily="@font/outfit_bold"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:text="Popular Companies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_marginTop="10dp"
+                android:id="@+id/companiesViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            app:indicatorSize="50dp"
+            android:visibility="gone"
+            android:indeterminate="true"
+            app:indicatorColor="@color/secondary"
+            android:id="@+id/progressIndicator"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+</ScrollView>

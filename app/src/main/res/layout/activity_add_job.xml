@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_dark"
+    android:fillViewport="true"
+    tools:context=".AddJobActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:id="@+id/addJobLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="20dp">
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:minWidth="0dp"
+                    android:padding="0dp"
+                    android:id="@+id/backBtn"
+                    app:backgroundTint="@null"
+                    app:icon="@drawable/baseline_arrow_back_24"
+                    app:iconPadding="0dp"
+                    app:iconSize="30dp"
+                    app:iconTint="@color/white" />
+                <TextView
+                    android:layout_weight="1"
+                    android:text="Add Job"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:textColor="@color/white"
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="20sp"
+                android:text="Job Title"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/jobTitleEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:backgroundTint="@null"
+                android:hint="ex. Software Developer"
+                android:textFontWeight="700"
+                android:fontFamily="@font/outfit_light"
+                android:inputType="text"
+                android:lines="1"
+                android:paddingVertical="20dp"
+                android:paddingHorizontal="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/grey"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="20sp"
+                android:text="Job Category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:layout_marginTop="10dp"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="16dp"
+                android:background="@drawable/clippath_background"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:id="@+id/jobCategorySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="20sp"
+                android:text="Experience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:layout_marginTop="10dp"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="16dp"
+                android:background="@drawable/clippath_background"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:id="@+id/experienceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="20sp"
+                android:text="Gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:layout_marginTop="10dp"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="16dp"
+                android:background="@drawable/clippath_background"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:id="@+id/genderSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="20sp"
+                android:text="Salary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <Spinner
+                android:layout_marginTop="10dp"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="16dp"
+                android:background="@drawable/clippath_background"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:id="@+id/salarySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="20sp"
+                android:text="Job Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+            <EditText
+                android:minLines="5"
+                android:layout_marginTop="10dp"
+                android:id="@+id/jobDescriptionEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:backgroundTint="@null"
+                android:textFontWeight="700"
+                android:fontFamily="@font/outfit_light"
+                android:paddingVertical="20dp"
+                android:paddingHorizontal="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/grey"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="20sp"
+                android:text="Job Qualifications"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+            <EditText
+                android:textAlignment="viewStart"
+                android:minLines="5"
+                android:layout_marginTop="10dp"
+                android:id="@+id/jobQualificationsEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:backgroundTint="@null"
+                android:textFontWeight="700"
+                android:fontFamily="@font/outfit_light"
+                android:paddingVertical="20dp"
+                android:paddingHorizontal="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/grey"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="20sp"
+                android:text="Benefits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+            <EditText
+                android:textAlignment="viewStart"
+                android:minLines="5"
+                android:layout_marginTop="10dp"
+                android:id="@+id/benefitsEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:backgroundTint="@null"
+                android:textFontWeight="700"
+                android:fontFamily="@font/outfit_light"
+                android:paddingVertical="20dp"
+                android:paddingHorizontal="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/grey"
+                android:textCursorDrawable="@null"
+                android:textSize="20sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/addJobBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/orange_button_outline"
+                android:fontFamily="@font/outfit_bold"
+                android:padding="8dp"
+                android:text="Add Job"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                app:backgroundTint="@null" />
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            app:indicatorSize="50dp"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorColor="@color/secondary"
+            android:id="@+id/progressIndicator"
+            android:layout_height="wrap_content"/>    </FrameLayout>
+
+</ScrollView>

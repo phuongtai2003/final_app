@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:fillViewport="true"
+    android:background="@color/primary_dark"
+    tools:context=".CompanyHomeFragment"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/companyHomeFragmentLinearLayout"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:background="@color/primary_dark"
+            android:layout_height="match_parent"
+            >
+
+            <TextView
+                android:textSize="26sp"
+                android:text="Hello,"
+                android:fontFamily="@font/outfit_light"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/companyNameTxt"
+                android:textColor="@color/primary_text"
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="30sp"
+                android:text="Welcome to Outfit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                android:text="Jobs Listings"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <FrameLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:id="@+id/noJobsLayout"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/outfit_bold"
+                        android:textColor="@color/secondary"
+                        android:text="It looks like you haven't added any jobs yet."
+                        android:layout_gravity="center_horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:background="@drawable/orange_button_outline"
+                        app:backgroundTint="@null"
+                        android:fontFamily="@font/outfit_bold"
+                        android:textColor="@color/white"
+                        android:text="Add Job"
+                        android:id="@+id/addJobBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            app:indicatorSize="50dp"
+            android:visibility="gone"
+            android:indeterminate="true"
+            app:indicatorColor="@color/secondary"
+            android:id="@+id/progressIndicator"
+            android:layout_height="wrap_content"/>
+
+    </FrameLayout>
+</ScrollView>
