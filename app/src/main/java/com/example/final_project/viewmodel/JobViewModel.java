@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.final_project.models.Company;
 import com.example.final_project.models.Job;
 import com.example.final_project.models.JobCategory;
+import com.example.final_project.repository.HomeRepository;
 import com.example.final_project.repository.JobRepository;
 import com.example.final_project.utils.JobFireStoreResult;
 
@@ -28,6 +29,11 @@ public class JobViewModel extends ViewModel {
             @Override
             public void onAddJobResult(boolean result) {
             }
+
+            @Override
+            public void onGetJobsByCompanyResult(boolean result, List<Job> jobList) {
+
+            }
         });
     }
 
@@ -35,7 +41,6 @@ public class JobViewModel extends ViewModel {
         Company company = jobRepository.getCompany();
         Job job = new Job(title, category, experience, gender, salary, description, qualifications, benefits, company.getId());
         jobRepository.addJob(job, results);
-
     }
 
     public MutableLiveData<List<JobCategory>> getJobCategories() {

@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.final_project.adapter.StringSpinnerAdapter;
 import com.example.final_project.databinding.ActivityAddJobBinding;
+import com.example.final_project.models.Job;
 import com.example.final_project.models.JobCategory;
 import com.example.final_project.utils.GlobalConstants;
 import com.example.final_project.utils.JobFireStoreResult;
@@ -42,9 +43,9 @@ public class AddJobActivity extends AppCompatActivity {
         binding.progressIndicator.show();
         binding.addJobLayout.setVisibility(View.GONE);
         binding.backBtn.setOnClickListener(v -> finish());
-        salaryAdapter = new StringSpinnerAdapter(GlobalConstants.salaryRanges, this);
+        salaryAdapter = new StringSpinnerAdapter(GlobalConstants.salaryRanges.subList(1, GlobalConstants.salaryRanges.size()), this);
         binding.salarySpinner.setAdapter(salaryAdapter);
-        jobExperienceAdapter = new StringSpinnerAdapter(GlobalConstants.experienceLevels, this);
+        jobExperienceAdapter = new StringSpinnerAdapter(GlobalConstants.experienceLevels.subList(1, GlobalConstants.experienceLevels.size()), this);
         binding.experienceSpinner.setAdapter(jobExperienceAdapter);
         gendersAdapter = new StringSpinnerAdapter(GlobalConstants.genders, this);
         binding.genderSpinner.setAdapter(gendersAdapter);
@@ -108,6 +109,11 @@ public class AddJobActivity extends AppCompatActivity {
                             binding.progressIndicator.hide();
                             UIHelpers.showDialog(Gravity.CENTER, "Something went wrong", AddJobActivity.this);
                         }
+                    }
+
+                    @Override
+                    public void onGetJobsByCompanyResult(boolean result, List<Job> jobList) {
+
                     }
                 });
             }

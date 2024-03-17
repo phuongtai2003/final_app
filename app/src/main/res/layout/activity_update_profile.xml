@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_dark"
+    android:fillViewport="true"
+    tools:context=".UpdateProfileActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/updateLayout"
+            android:paddingHorizontal="16dp"
+            android:orientation="vertical"
+            android:paddingVertical="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/btnBack"
+                    app:icon="@drawable/baseline_arrow_back_24"
+                    app:iconTint="@color/white"
+                    app:iconSize="30dp"
+                    android:minWidth="0dp"
+                    android:background="@android:color/transparent"
+                    app:iconPadding="0dp"
+                    android:padding="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:id="@+id/cvBtn"
+                    app:icon="@drawable/baseline_document_scanner_24"
+                    app:iconTint="@color/white"
+                    app:iconSize="30dp"
+                    android:minWidth="0dp"
+                    android:background="@android:color/transparent"
+                    app:iconPadding="0dp"
+                    android:padding="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:textSize="24sp"
+                android:text="Name"
+                android:textColor="@color/white"
+                android:fontFamily="@font/outfit_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="John Doe"
+                android:fontFamily="@font/outfit_bold"
+                android:id="@+id/nameEdt"
+                android:inputType="textPersonName"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/grey"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_marginTop="12dp"
+                android:textSize="24sp"
+                android:text="Phone"
+                android:textColor="@color/white"
+                android:fontFamily="@font/outfit_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:layout_marginTop="6dp"
+                android:background="@drawable/edit_text_background"
+                android:textSize="20sp"
+                android:fontFamily="@font/outfit_bold"
+                android:textColor="@color/white"
+                android:hint="1234567890"
+                android:id="@+id/phoneEdt"
+                android:inputType="phone"
+                android:padding="10dp"
+                android:textColorHint="@color/grey"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/orange_button"
+                app:backgroundTint="@null"
+                android:text="Update"
+                android:id="@+id/updateBtn"
+                android:textColor="@color/white"
+                android:fontFamily="@font/outfit_bold"
+                android:textSize="20sp"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progressIndicator"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:indeterminate="true"
+            app:indicatorColor="@color/secondary"
+            app:indicatorSize="50dp"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+</ScrollView>

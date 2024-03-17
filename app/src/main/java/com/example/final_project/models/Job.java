@@ -1,6 +1,12 @@
 package com.example.final_project.models;
 
-public class Job {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Job implements Parcelable {
+    private String id;
     private String jobTitle;
     private String jobCategory;
     private String jobExperience;
@@ -10,6 +16,7 @@ public class Job {
     private String jobQualifications;
     private String jobBenefits;
     private String companyId;
+    private Company company;
 
     public Job() {
     }
@@ -24,6 +31,32 @@ public class Job {
         this.jobBenefits = jobBenefits;
         this.companyId = companyId;
     }
+
+    protected Job(Parcel in) {
+        id = in.readString();
+        jobTitle = in.readString();
+        jobCategory = in.readString();
+        jobExperience = in.readString();
+        jobGender = in.readString();
+        jobSalary = in.readString();
+        jobDescription = in.readString();
+        jobQualifications = in.readString();
+        jobBenefits = in.readString();
+        companyId = in.readString();
+        company = in.readParcelable(Company.class.getClassLoader());
+    }
+
+    public static final Creator<Job> CREATOR = new Creator<Job>() {
+        @Override
+        public Job createFromParcel(Parcel in) {
+            return new Job(in);
+        }
+
+        @Override
+        public Job[] newArray(int size) {
+            return new Job[size];
+        }
+    };
 
     public String getJobTitle() {
         return jobTitle;
@@ -85,6 +118,22 @@ public class Job {
         this.companyId = companyId;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
     public void setJobQualifications(String jobQualifications) {
         this.jobQualifications = jobQualifications;
     }
@@ -95,5 +144,25 @@ public class Job {
 
     public void setJobBenefits(String jobBenefits) {
         this.jobBenefits = jobBenefits;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(jobTitle);
+        parcel.writeString(jobCategory);
+        parcel.writeString(jobExperience);
+        parcel.writeString(jobGender);
+        parcel.writeString(jobSalary);
+        parcel.writeString(jobDescription);
+        parcel.writeString(jobQualifications);
+        parcel.writeString(jobBenefits);
+        parcel.writeString(companyId);
+        parcel.writeParcelable(company, i);
     }
 }

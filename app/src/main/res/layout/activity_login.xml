@@ -72,16 +72,6 @@
                 android:textColorHint="@color/grey"
                 android:textCursorDrawable="@null"
                 android:textSize="25sp" />
-            <TextView
-                android:id="@+id/forgotPasswordTextView"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/outfit_bold"
-                android:textSize="16sp"
-                android:text="Forgot your password?"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
 
             <com.google.android.material.button.MaterialButton

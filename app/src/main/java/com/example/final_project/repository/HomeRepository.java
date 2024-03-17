@@ -1,11 +1,17 @@
 package com.example.final_project.repository;
 
+import android.net.Uri;
+
 import com.example.final_project.data.SharedPreferencesDataSource;
 import com.example.final_project.models.Company;
 import com.example.final_project.models.JobCategory;
 import com.example.final_project.models.User;
+import com.example.final_project.utils.FirebaseStorageResult;
 import com.example.final_project.utils.HomeFireStoreResult;
+import com.example.final_project.utils.UpdateProfileResult;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -13,7 +19,7 @@ import java.util.List;
 
 public class HomeRepository {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
     private static HomeRepository instance;
 
     private HomeRepository() {
@@ -24,6 +30,10 @@ public class HomeRepository {
             instance = new HomeRepository();
         }
         return instance;
+    }
+
+    public void saveUser(User user) {
+        SharedPreferencesDataSource.getInstance().saveString("user", new Gson().toJson(user));
     }
 
     public User getCurrentUser() {
@@ -41,7 +51,6 @@ public class HomeRepository {
                 for (int i = 0; i < task.getResult().size(); i++) {
                     Company company = task.getResult().toObjects(Company.class).get(i);
                     company.setId(task.getResult().getDocuments().get(i).getId());
-                    companies.add(company);
                     companies.add(company);
                 }
                 results.onGetCompaniesResult(true, companies);
@@ -73,6 +82,35 @@ public class HomeRepository {
             }
         }).addOnFailureListener(e -> {
             results.onGetJobCatResult(false, null);
+        });
+    }
+
+    public void updateProfile(User user, UpdateProfileResult result) {
+        db.collection("users").document(user.getId()).set(user).addOnSuccessListener(aVoid -> {
+            SharedPreferencesDataSource.getInstance().saveString("user", new Gson().toJson(user));
+            result.onUpdateProfileResult(true, user);
+        }).addOnFailureListener(e -> {
+            result.onUpdateProfileResult(false, null);
+        });
+    }
+
+    public void uploadImage(Uri imageUri, FirebaseStorageResult result) {
+        StorageReference imageRef = storageReference.child("images/" + imageUri.getLastPathSegment());
+        imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+            imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                User user = getCurrentUser();
+                user.setImage(uri.toString());
+                updateProfile(user, (updateResult, updatedUser) -> {
+                    if (updateResult) {
+                        result.onImageUploadResult(true, uri.toString());
+                    }
+                    else {
+                        result.onImageUploadResult(false, null);
+                    }
+                });
+            });
+        }).addOnFailureListener(e -> {
+            result.onImageUploadResult(false, null);
         });
     }
 }

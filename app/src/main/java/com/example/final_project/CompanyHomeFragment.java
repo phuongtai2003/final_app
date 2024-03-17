@@ -3,14 +3,20 @@ package com.example.final_project;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.final_project.adapter.JobAdapter;
 import com.example.final_project.databinding.FragmentCompanyHomeBinding;
+import com.example.final_project.models.Job;
+import com.example.final_project.utils.OnJobClickedListener;
 import com.example.final_project.viewmodel.CompanyHomeViewModel;
 
 /**
@@ -21,6 +27,7 @@ import com.example.final_project.viewmodel.CompanyHomeViewModel;
 public class CompanyHomeFragment extends Fragment {
     private FragmentCompanyHomeBinding binding;
     private CompanyHomeViewModel companyHomeViewModel;
+    private JobAdapter jobAdapter;
     public CompanyHomeFragment() {
     }
 
@@ -59,9 +66,40 @@ public class CompanyHomeFragment extends Fragment {
             });
         companyHomeViewModel.getCurrentCompany().observe(getViewLifecycleOwner(), company -> {
             if(company != null){
-                binding.companyHomeFragmentLinearLayout.setVisibility(View.VISIBLE);
-                binding.progressIndicator.setVisibility(View.GONE);
                 binding.companyNameTxt.setText(company.getName());
+            }
+        });
+        companyHomeViewModel.getJobs().observe(getViewLifecycleOwner(), jobs -> {
+            if(jobs != null){
+                if(jobs.isEmpty()){
+                    binding.companyHomeFragmentLinearLayout.setVisibility(View.VISIBLE);
+                    binding.progressIndicator.setVisibility(View.GONE);
+                    binding.noJobsLayout.setVisibility(View.VISIBLE);
+                    binding.jobListPagerView.setVisibility(View.GONE);
+                }
+                else{
+                    binding.noJobsLayout.setVisibility(View.GONE);
+                    binding.jobListPagerView.setVisibility(View.VISIBLE);
+                    binding.companyHomeFragmentLinearLayout.setVisibility(View.VISIBLE);
+                    binding.progressIndicator.setVisibility(View.GONE);
+                    jobAdapter = new JobAdapter(getActivity(), jobs, R.layout.job_item_layout, new OnJobClickedListener() {
+                        @Override
+                        public void onJobClicked(Job job) {
+                            Intent intent = new Intent(getActivity(), JobDetailsActivity.class);
+                            intent.putExtra("job", job);
+                            startActivity(intent);
+                        }
+                    });
+                    binding.jobListPagerView.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                    binding.jobListPagerView.setPageTransformer(new ViewPager2.PageTransformer() {
+                        @Override
+                        public void transformPage(@NonNull View page, float position) {
+                            float absPos = Math.abs(position);
+                            page.setAlpha(1 - absPos);
+                        }
+                    });
+                    binding.jobListPagerView.setAdapter(jobAdapter);
+                }
             }
         });
 

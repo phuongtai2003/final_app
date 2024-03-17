@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/primary"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/bottomLayout"
+        android:orientation="vertical"
+        android:background="@color/primary"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="24sp"
+            android:text="Manage Resume"
+            android:textAlignment="center"
+            android:fontFamily="@font/outfit_bold"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="10dp"
+            android:id="@+id/resumeRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="No resume found, please add a new one."
+            android:textAlignment="center"
+            android:fontFamily="@font/outfit_bold"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:id="@+id/noResumeFoundTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:text="Add New"
+            android:id="@+id/addNewResumeBtn"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/orange_button"
+            app:backgroundTint="@null"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:fontFamily="@font/outfit_bold"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        app:indicatorSize="50dp"
+        android:visibility="gone"
+        android:indeterminate="true"
+        app:indicatorColor="@color/secondary"
+        android:id="@+id/progressIndicator"
+        android:layout_height="wrap_content"/>
+</FrameLayout>
+

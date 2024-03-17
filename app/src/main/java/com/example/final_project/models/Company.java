@@ -1,6 +1,11 @@
 package com.example.final_project.models;
 
-public class Company {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Company implements Parcelable {
     private String id;
     private String name;
     private String email;
@@ -20,6 +25,28 @@ public class Company {
         this.address = address;
         this.password = password;
     }
+
+    protected Company(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        email = in.readString();
+        password = in.readString();
+        phone = in.readString();
+        image = in.readString();
+        address = in.readString();
+    }
+
+    public static final Creator<Company> CREATOR = new Creator<Company>() {
+        @Override
+        public Company createFromParcel(Parcel in) {
+            return new Company(in);
+        }
+
+        @Override
+        public Company[] newArray(int size) {
+            return new Company[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -87,4 +114,22 @@ public class Company {
                 ", address='" + address + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(name);
+        parcel.writeString(email);
+        parcel.writeString(password);
+        parcel.writeString(phone);
+        parcel.writeString(image);
+        parcel.writeString(address);
+    }
+
+
 }

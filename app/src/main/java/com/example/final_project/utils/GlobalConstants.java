@@ -9,6 +9,7 @@ public class GlobalConstants {
         add("Company");
     }};
     public static final List<String> experienceLevels = new ArrayList<String>(){{
+        add("View All");
         add("No Experience Required");
         add("Under 1 Year");
         add("1-3 Years");
@@ -18,6 +19,7 @@ public class GlobalConstants {
     }};
 
     public static final List<String> salaryRanges =new ArrayList<String>(){{
+        add("View All");
         add("Not Specified");
         add("Under $20,000");
         add("$20,000 - $40,000");

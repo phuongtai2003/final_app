@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.final_project.R;
+import com.example.final_project.viewmodel.JobDetailsViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -51,5 +52,4 @@ public class UIHelpers {
 
         dialog.show();
     }
-
 }
