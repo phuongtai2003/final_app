@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.final_project.adapter.ResumeAdapter;
 import com.example.final_project.databinding.ResumeBottomSheetLayoutBinding;
+import com.example.final_project.models.Company;
 import com.example.final_project.models.Resume;
 import com.example.final_project.models.User;
 import com.example.final_project.utils.ProfileFireStoreResult;
@@ -83,6 +84,11 @@ public class ResumeBottomSheetDialog extends BottomSheetDialogFragment {
                 binding.progressIndicator.setVisibility(View.VISIBLE);
                 binding.bottomLayout.setVisibility(View.GONE);
                 profileViewModel.uploadResume(pdfUri, new ProfileFireStoreResult() {
+                    @Override
+                    public void onUpdateCompanyProfileResult(boolean result, Company user) {
+
+                    }
+
                     @Override
                     public void onUpdateProfileResult(boolean result, User user) {
 

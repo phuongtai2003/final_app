@@ -165,4 +165,21 @@ public class Job implements Parcelable {
         parcel.writeString(companyId);
         parcel.writeParcelable(company, i);
     }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id='" + id + '\'' +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", jobCategory='" + jobCategory + '\'' +
+                ", jobExperience='" + jobExperience + '\'' +
+                ", jobGender='" + jobGender + '\'' +
+                ", jobSalary='" + jobSalary + '\'' +
+                ", jobDescription='" + jobDescription + '\'' +
+                ", jobQualifications='" + jobQualifications + '\'' +
+                ", jobBenefits='" + jobBenefits + '\'' +
+                ", companyId='" + companyId + '\'' +
+                ", company=" + company +
+                '}';
+    }
 }

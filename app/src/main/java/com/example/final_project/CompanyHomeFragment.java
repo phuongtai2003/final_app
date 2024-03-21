@@ -1,5 +1,6 @@
 package com.example.final_project;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import com.example.final_project.adapter.JobAdapter;
 import com.example.final_project.databinding.FragmentCompanyHomeBinding;
 import com.example.final_project.models.Job;
+import com.example.final_project.utils.OnChangeBottomNavIndex;
 import com.example.final_project.utils.OnJobClickedListener;
 import com.example.final_project.viewmodel.CompanyHomeViewModel;
 
@@ -28,6 +30,19 @@ public class CompanyHomeFragment extends Fragment {
     private FragmentCompanyHomeBinding binding;
     private CompanyHomeViewModel companyHomeViewModel;
     private JobAdapter jobAdapter;
+    private OnChangeBottomNavIndex onChangeBottomNavIndex;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof OnChangeBottomNavIndex){
+            onChangeBottomNavIndex = (OnChangeBottomNavIndex) context;
+        }
+        else{
+            throw new RuntimeException(context.toString() + " must implement OnChangeBottomNavIndex");
+        }
+    }
+
     public CompanyHomeFragment() {
     }
 
@@ -53,23 +68,38 @@ public class CompanyHomeFragment extends Fragment {
     }
 
     private void initVM(){
-        companyHomeViewModel = new ViewModelProvider(this).get(CompanyHomeViewModel.class);
+        companyHomeViewModel = new ViewModelProvider(requireActivity()).get(CompanyHomeViewModel.class);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void initView(){
-        requireActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    binding.companyHomeFragmentLinearLayout.setVisibility(View.GONE);
-                    binding.progressIndicator.setVisibility(View.VISIBLE);
-                }
-            });
+        binding.viewAllJobsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onChangeBottomNavIndex.onChangeIndex(1, 0, null);
+            }
+        });
+        binding.addNewJobBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddJobActivity.class);
+                startActivity(intent);
+            }
+        });
+        binding.companyHomeFragmentLinearLayout.setVisibility(View.GONE);
+        binding.progressIndicator.setVisibility(View.VISIBLE);
         companyHomeViewModel.getCurrentCompany().observe(getViewLifecycleOwner(), company -> {
             if(company != null){
                 binding.companyNameTxt.setText(company.getName());
             }
         });
         companyHomeViewModel.getJobs().observe(getViewLifecycleOwner(), jobs -> {
+            binding.companyHomeFragmentLinearLayout.setVisibility(View.GONE);
+            binding.progressIndicator.setVisibility(View.VISIBLE);
             if(jobs != null){
                 if(jobs.isEmpty()){
                     binding.companyHomeFragmentLinearLayout.setVisibility(View.VISIBLE);
@@ -85,7 +115,7 @@ public class CompanyHomeFragment extends Fragment {
                     jobAdapter = new JobAdapter(getActivity(), jobs, R.layout.job_item_layout, new OnJobClickedListener() {
                         @Override
                         public void onJobClicked(Job job) {
-                            Intent intent = new Intent(getActivity(), JobDetailsActivity.class);
+                            Intent intent = new Intent(getActivity(), CompanyJobDetailsActivity.class);
                             intent.putExtra("job", job);
                             startActivity(intent);
                         }

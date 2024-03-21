@@ -10,6 +10,7 @@ public class Resume  implements Parcelable {
     private String userId;
     private String id;
     private String url;
+    private User user;
 
     public Resume(){
 
@@ -26,6 +27,7 @@ public class Resume  implements Parcelable {
         userId = in.readString();
         id = in.readString();
         url = in.readString();
+        user = in.readParcelable(User.class.getClassLoader());
     }
 
     public static final Creator<Resume> CREATOR = new Creator<Resume>() {
@@ -72,6 +74,14 @@ public class Resume  implements Parcelable {
         this.url = url;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Resume{" +
@@ -93,5 +103,6 @@ public class Resume  implements Parcelable {
         parcel.writeString(userId);
         parcel.writeString(id);
         parcel.writeString(url);
+        parcel.writeParcelable(user, i);
     }
 }

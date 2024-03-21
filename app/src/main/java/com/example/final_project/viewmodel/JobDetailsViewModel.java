@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.final_project.models.Company;
 import com.example.final_project.models.Job;
 import com.example.final_project.models.Resume;
 import com.example.final_project.models.User;
@@ -40,6 +41,11 @@ public class JobDetailsViewModel extends ViewModel {
 
     public void fetchResumes(){
         profileRepository.fetchResumes(new ProfileFireStoreResult() {
+            @Override
+            public void onUpdateCompanyProfileResult(boolean result, Company user) {
+
+            }
+
             @Override
             public void onUpdateProfileResult(boolean result, User user) {
 

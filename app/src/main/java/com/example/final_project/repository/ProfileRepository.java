@@ -3,6 +3,7 @@ package com.example.final_project.repository;
 import android.net.Uri;
 
 import com.example.final_project.data.SharedPreferencesDataSource;
+import com.example.final_project.models.Company;
 import com.example.final_project.models.Resume;
 import com.example.final_project.models.User;
 import com.example.final_project.utils.ProfileFireStoreResult;
@@ -27,6 +28,10 @@ public class ProfileRepository {
             instance = new ProfileRepository();
         }
         return instance;
+    }
+
+    public Company getCurrentCompany() {
+        return new Gson().fromJson(SharedPreferencesDataSource.getInstance().getString("company"), Company.class);
     }
 
     public User getCurrentUser() {
@@ -77,6 +82,10 @@ public class ProfileRepository {
         });
     }
 
+    public void updateCompanyProfile(Company company, ProfileFireStoreResult result){
+
+    }
+
     public void updateProfile(User user, ProfileFireStoreResult result){
         db.collection("users").document(user.getId()).set(user).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -86,6 +95,19 @@ public class ProfileRepository {
             }
         }).addOnFailureListener(e -> {
             result.onUpdateProfileResult(false, null);
+        });
+    }
+
+    public void updateCompany(Company company, ProfileFireStoreResult result){
+        db.collection("companies").document(company.getId()).set(company).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                SharedPreferencesDataSource.getInstance().saveString("company", new Gson().toJson(company));
+                result.onUpdateCompanyProfileResult(true, company);
+            } else {
+                result.onUpdateCompanyProfileResult(false, null);
+            }
+        }).addOnFailureListener(e -> {
+            result.onUpdateCompanyProfileResult(false, null);
         });
     }
 }

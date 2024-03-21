@@ -3,6 +3,7 @@ package com.example.final_project.viewmodel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.final_project.models.Application;
 import com.example.final_project.models.Company;
 import com.example.final_project.models.Job;
 import com.example.final_project.models.JobCategory;
@@ -32,6 +33,11 @@ public class JobViewModel extends ViewModel {
 
             @Override
             public void onGetJobsByCompanyResult(boolean result, List<Job> jobList) {
+
+            }
+
+            @Override
+            public void onGetAppliedJobsResult(boolean result, List<Application> jobList) {
 
             }
         });

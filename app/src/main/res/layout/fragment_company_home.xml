@@ -86,6 +86,35 @@
 
                 </LinearLayout>
             </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <com.google.android.material.button.MaterialButton
+                    android:background="@drawable/orange_button_outline"
+                    app:backgroundTint="@null"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/outfit_bold"
+                    android:textColor="@color/white"
+                    android:text="Add New Job"
+                    android:id="@+id/addNewJobBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.button.MaterialButton
+                    android:background="@drawable/orange_button_outline"
+                    app:backgroundTint="@null"
+                    android:fontFamily="@font/outfit_bold"
+                    android:textColor="@color/white"
+                    android:text="View All Jobs"
+                    android:id="@+id/viewAllJobsBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
         </LinearLayout>
 
         <com.google.android.material.progressindicator.CircularProgressIndicator

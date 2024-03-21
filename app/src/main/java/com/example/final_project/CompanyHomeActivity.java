@@ -10,11 +10,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.example.final_project.databinding.ActivityCompanyHomeBinding;
+import com.example.final_project.utils.OnChangeBottomNavIndex;
 import com.example.final_project.viewmodel.CompanyHomeViewModel;
 import com.example.final_project.viewmodel.HomeViewModel;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class CompanyHomeActivity extends AppCompatActivity {
+public class CompanyHomeActivity extends AppCompatActivity implements OnChangeBottomNavIndex {
     private ActivityCompanyHomeBinding binding;
     private CompanyHomeViewModel homeViewModel;
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -60,4 +61,24 @@ public class CompanyHomeActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        homeViewModel.fetchCompanyJobs();
+    }
+
+    @Override
+    public void onChangeIndex(int index, int tabIndex, String jobCategory) {
+        Fragment fragment = homeViewModel.getCurrentFragment().getValue();
+        homeViewModel.setCurrentFragment(index);
+        fragmentManager.beginTransaction().hide(fragment).show(homeViewModel.getFragments().get(index)).commit();
+        if(index == 0){
+            binding.bottomNavbar.setSelectedItemId(R.id.home);
+        }else if(index == 1){
+            binding.bottomNavbar.setSelectedItemId(R.id.jobList);
+        }
+        else if(index == 2){
+            binding.bottomNavbar.setSelectedItemId(R.id.profile);
+        }
+    }
 }

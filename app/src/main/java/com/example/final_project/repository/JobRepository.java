@@ -3,12 +3,12 @@ package com.example.final_project.repository;
 import android.util.Log;
 
 import com.example.final_project.data.SharedPreferencesDataSource;
+import com.example.final_project.models.Application;
 import com.example.final_project.models.Company;
 import com.example.final_project.models.Job;
 import com.example.final_project.models.JobCategory;
 import com.example.final_project.models.Resume;
 import com.example.final_project.models.User;
-import com.example.final_project.utils.GetJobResult;
 import com.example.final_project.utils.JobDetailsFireStoreResult;
 import com.example.final_project.utils.JobFireStoreResult;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class JobRepository {
@@ -38,40 +37,148 @@ public class JobRepository {
         return instance;
     }
 
-    public User getUser() {
-        return new Gson().fromJson(SharedPreferencesDataSource.getInstance().getString("user"), User.class);
+    public void acceptApplication(Application application, JobDetailsFireStoreResult result){
+        Map<String, Object> data = new HashMap<>();
+        data.put("status", "accepted");
+         db.collection("applications").whereEqualTo("jobId", application.getJob().getId()).
+                whereEqualTo("resumeId", application.getResume().getId()).
+                whereEqualTo("timestamp", application.getTime()).get().addOnSuccessListener(task ->{
+                    if (task.size() > 0) {
+                        db.collection("applications").document(task.getDocuments().get(0).getId()).update(data).addOnSuccessListener(aVoid -> {
+                            result.onApplyJobResult(true);
+                        }).addOnFailureListener(e -> {
+                            result.onApplyJobResult(false);
+                        });
+                    } else {
+                        result.onApplyJobResult(false);
+                    }
+                 }).addOnFailureListener(e -> {
+                     result.onApplyJobResult(false);
+                 });
     }
 
-    public void fetchAppliedJobs(JobFireStoreResult result){
-        User user = getUser();
-        db.collection("applications").whereEqualTo("userId", user.getId()).get().addOnSuccessListener(task ->{
+    public void rejectApplication(Application application, JobDetailsFireStoreResult result){
+        Map<String, Object> data = new HashMap<>();
+        data.put("status", "rejected");
+        db.collection("applications").whereEqualTo("jobId", application.getJob().getId()).
+                whereEqualTo("resumeId", application.getResume().getId()).
+                whereEqualTo("timestamp", application.getTime()).get().addOnSuccessListener(task ->{
+                    if (task.size() > 0) {
+                        db.collection("applications").document(task.getDocuments().get(0).getId()).update(data).addOnSuccessListener(aVoid -> {
+                            result.onApplyJobResult(true);
+                        }).addOnFailureListener(e -> {
+                            result.onApplyJobResult(false);
+                        });
+                    } else {
+                        result.onApplyJobResult(false);
+                    }
+                }).addOnFailureListener(e -> {
+                    result.onApplyJobResult(false);
+                });
+    }
+
+
+    public void fetchApplicationsForJob(Job job, JobFireStoreResult result){
+        String jobId = job.getId();
+        List<Application> applications = new ArrayList<>();
+        db.collection("applications").whereEqualTo("jobId", jobId).get().addOnSuccessListener(task ->{
             List<CompletableFuture<Job>> futures = new ArrayList<>();
+            List<CompletableFuture<Resume>> resumeFutures = new ArrayList<>();
             for (int i = 0; i < task.size(); i++) {
-                String jobId = task.getDocuments().get(i).getString("jobId");
+                String status = task.getDocuments().get(i).getString("status");
+                String timestamp = task.getDocuments().get(i).getString("timestamp");
+                Application application = new Application(null, null ,status, timestamp);
+                applications.add(application);
                 CompletableFuture<Job> future = getJobById(jobId);
+                CompletableFuture<Resume> resumeFuture = getResumeById(task.getDocuments().get(i).getString("resumeId"));
                 futures.add(future);
+                resumeFutures.add(resumeFuture);
             }
             CompletableFuture<Void> allOf = CompletableFuture.allOf(
                     futures.toArray(new CompletableFuture[0])
             );
-            allOf.thenRun(() -> {
-                List<Job> mapJobs = futures.stream()
-                        .map(f -> {
-                            try {
-                                return f.get();
-                            } catch (Exception e) {
-                                return null;
-                            }
-                        })
-                        .collect(Collectors.toList());
-                result.onGetJobsByCompanyResult(true, mapJobs);
-            }).exceptionally(e -> {
-                result.onGetJobsByCompanyResult(false, null);
+            CompletableFuture<Void> allOfResume = CompletableFuture.allOf(
+                    resumeFutures.toArray(new CompletableFuture[0])
+            );
+
+            CompletableFuture<Void> allCompleted = allOf.thenCombine(allOfResume, (aVoid, aVoid2) -> {
+                for (int i = 0; i < applications.size(); i++) {
+                    applications.get(i).setJob(futures.get(i).join());
+                    applications.get(i).setResume(resumeFutures.get(i).join());
+                }
+                result.onGetAppliedJobsResult(true, applications);
+                return null;
+            });
+        }).addOnFailureListener(
+                e -> {
+                    result.onGetAppliedJobsResult(false, null);
+                }
+        );
+    }
+
+    public User getUser() {
+        return new Gson().fromJson(SharedPreferencesDataSource.getInstance().getString("user"), User.class);
+    }
+
+    public CompletableFuture<Resume> getResumeById(String id){
+        CompletableFuture<Resume> future = new CompletableFuture<>();
+        db.collection("resumes").document(id).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Resume resume = task.getResult().toObject(Resume.class);
+                resume.setId(task.getResult().getId());
+                db.collection("users").document(resume.getUserId()).get().addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        DocumentSnapshot documentSnapshot = task1.getResult();
+                        if (documentSnapshot.exists()) {
+                            resume.setUser(documentSnapshot.toObject(User.class));
+                            future.complete(resume);
+                        }
+                    } else {
+                        future.completeExceptionally(task1.getException());
+                    }
+                }).addOnFailureListener(future::completeExceptionally);
+            } else {
+                future.completeExceptionally(task.getException());
+            }
+        }).addOnFailureListener(future::completeExceptionally);
+        return future;
+    }
+
+    public void fetchAppliedJobs(JobFireStoreResult result){
+        User user = getUser();
+        List<Application> applications = new ArrayList<>();
+        db.collection("applications").whereEqualTo("userId", user.getId()).get().addOnSuccessListener(task ->{
+            List<CompletableFuture<Job>> futures = new ArrayList<>();
+            List<CompletableFuture<Resume>> resumeFutures = new ArrayList<>();
+            for (int i = 0; i < task.size(); i++) {
+                String jobId = task.getDocuments().get(i).getString("jobId");
+                String status = task.getDocuments().get(i).getString("status");
+                String timestamp = task.getDocuments().get(i).getString("timestamp");
+                Application application = new Application(null, null ,status, timestamp);
+                applications.add(application);
+                CompletableFuture<Job> future = getJobById(jobId);
+                CompletableFuture<Resume> resumeFuture = getResumeById(task.getDocuments().get(i).getString("resumeId"));
+                futures.add(future);
+                resumeFutures.add(resumeFuture);
+            }
+            CompletableFuture<Void> allOf = CompletableFuture.allOf(
+                    futures.toArray(new CompletableFuture[0])
+            );
+            CompletableFuture<Void> allOfResume = CompletableFuture.allOf(
+                    resumeFutures.toArray(new CompletableFuture[0])
+            );
+
+            CompletableFuture<Void> allCompleted = allOf.thenCombine(allOfResume, (aVoid, aVoid2) -> {
+                for (int i = 0; i < applications.size(); i++) {
+                    applications.get(i).setJob(futures.get(i).join());
+                    applications.get(i).setResume(resumeFutures.get(i).join());
+                }
+                result.onGetAppliedJobsResult(true, applications);
                 return null;
             });
         }).addOnFailureListener(
             e -> {
-                result.onGetJobsByCompanyResult(false, null);
+                result.onGetAppliedJobsResult(false, null);
             }
         );
     }

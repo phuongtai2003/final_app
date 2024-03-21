@@ -11,6 +11,7 @@ import com.example.final_project.BookmarkJobFragment;
 import com.example.final_project.HomeFragment;
 import com.example.final_project.ProfileFragment;
 import com.example.final_project.SearchFragment;
+import com.example.final_project.models.Application;
 import com.example.final_project.models.Company;
 import com.example.final_project.models.Job;
 import com.example.final_project.models.JobCategory;
@@ -100,6 +101,11 @@ public class HomeViewModel extends ViewModel {
                     filteredJobs.postValue(jobList);
                 }
             }
+
+            @Override
+            public void onGetAppliedJobsResult(boolean result, List<Application> jobList) {
+
+            }
         });
     }
 
@@ -121,6 +127,11 @@ public class HomeViewModel extends ViewModel {
                     Log.d("USER TAG", "onGetJobsByCompanyResult: " + jobList.size());
                     setBookmarkedJobs(new ArrayList<>(jobList));
                 }
+            }
+
+            @Override
+            public void onGetAppliedJobsResult(boolean result, List<Application> jobList) {
+
             }
         });
     }

@@ -14,6 +14,15 @@
         android:theme="@style/Theme.FinalProject"
         tools:targetApi="31">
         <activity
+            android:name=".ViewCandidatesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateCompanyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CompanyJobDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".AppliedJobsActivity"
             android:exported="false" />
         <activity

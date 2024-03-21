@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.final_project.databinding.ActivityUpdateProfileBinding;
+import com.example.final_project.models.Company;
 import com.example.final_project.models.Resume;
 import com.example.final_project.models.User;
 import com.example.final_project.utils.ProfileFireStoreResult;
@@ -58,6 +59,11 @@ public class UpdateProfileActivity extends AppCompatActivity {
                 String name = binding.nameEdt.getText().toString();
                 String phone = binding.phoneEdt.getText().toString();
                 profileViewModel.updateProfile(name, phone, new ProfileFireStoreResult() {
+                    @Override
+                    public void onUpdateCompanyProfileResult(boolean result, Company user) {
+
+                    }
+
                     @Override
                     public void onUpdateProfileResult(boolean result, User user) {
                         if (result) {

@@ -94,23 +94,71 @@ public class HomeRepository {
         });
     }
 
-    public void uploadImage(Uri imageUri, FirebaseStorageResult result) {
+    public void updateProfileCompany(Company company, UpdateProfileResult result) {
+        db.collection("companies").document(company.getId()).set(company).addOnSuccessListener(aVoid -> {
+            SharedPreferencesDataSource.getInstance().saveString("company", new Gson().toJson(company));
+            result.onUpdateCompanyProfileResult(true, company);
+        }).addOnFailureListener(e -> {
+            result.onUpdateCompanyProfileResult(false, null);
+        });
+    }
+
+    public void uploadImage(Uri imageUri, FirebaseStorageResult results) {
         StorageReference imageRef = storageReference.child("images/" + imageUri.getLastPathSegment());
         imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
             imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                 User user = getCurrentUser();
                 user.setImage(uri.toString());
-                updateProfile(user, (updateResult, updatedUser) -> {
-                    if (updateResult) {
-                        result.onImageUploadResult(true, uri.toString());
+                updateProfile(user, new UpdateProfileResult() {
+                    @Override
+                    public void onUpdateProfileResult(boolean result, User user) {
+                        if (result) {
+                            results.onImageUploadResult(true, uri.toString());
+                        }
+                        else {
+                            results.onImageUploadResult(false, null);
+                        }
+
                     }
-                    else {
-                        result.onImageUploadResult(false, null);
+
+                    @Override
+                    public void onUpdateCompanyProfileResult(boolean result, Company user) {
+
                     }
                 });
             });
         }).addOnFailureListener(e -> {
-            result.onImageUploadResult(false, null);
+            results.onImageUploadResult(false, null);
         });
     }
+
+    public void uploadImageCompany(Uri imageUri, FirebaseStorageResult results) {
+        StorageReference imageRef = storageReference.child("images/" + imageUri.getLastPathSegment());
+        imageRef.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
+            imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                Company company = getCurrentCompany();
+                company.setImage(uri.toString());
+                updateProfileCompany(company, new UpdateProfileResult() {
+                    @Override
+                    public void onUpdateProfileResult(boolean result, User user) {
+
+                    }
+
+                    @Override
+                    public void onUpdateCompanyProfileResult(boolean result, Company company1) {
+                        if (result) {
+                            results.onImageUploadResult(true, uri.toString());
+                        }
+                        else {
+                            results.onImageUploadResult(false, null);
+                        }
+
+                    }
+                });
+            });
+        }).addOnFailureListener(e -> {
+            results.onImageUploadResult(false, null);
+        });
+    }
+
 }

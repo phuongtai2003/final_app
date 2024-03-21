@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.final_project.adapter.StringSpinnerAdapter;
 import com.example.final_project.databinding.ActivityAddJobBinding;
+import com.example.final_project.models.Application;
 import com.example.final_project.models.Job;
 import com.example.final_project.models.JobCategory;
 import com.example.final_project.utils.GlobalConstants;
@@ -113,6 +114,11 @@ public class AddJobActivity extends AppCompatActivity {
 
                     @Override
                     public void onGetJobsByCompanyResult(boolean result, List<Job> jobList) {
+
+                    }
+
+                    @Override
+                    public void onGetAppliedJobsResult(boolean result, List<Application> jobList) {
 
                     }
                 });
